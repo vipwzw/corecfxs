@@ -1,5 +1,8 @@
 const { Conflux, Drip } = require('js-conflux-sdk');
-
+/*
+1. privateKey 变成一个数组
+2. 系统自动读取多个private key, 然后运行。
+*/
 const conflux = new Conflux({
     url: 'https://main.confluxrpc.com',
     networkId: 1029,
@@ -20,7 +23,7 @@ async function main() {
         } catch(err) {
             console.error(err);
         }
-        await waitMilliseconds(10 * 1000);
+        await waitMilliseconds(1000);
     }
 
 }
@@ -43,10 +46,15 @@ async function oneRound() {
             });
             console.log(`Sending ${i}`, hash);
         } catch(err) {
-            console.error(err);
-            //await waitMilliseconds(1000);
-            //i--;
-            break;
+            if (err.data.includes("Transaction Pool is full")) {
+                console.log(err.data)
+                await waitMilliseconds(1000);
+                i--;
+                continue;
+            } else {
+                console.log(err.data)
+                break;
+            }
         }
     }
 
