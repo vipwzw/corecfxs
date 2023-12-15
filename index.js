@@ -44,9 +44,10 @@ async function oneRound() {
             console.log(`Sending ${i}`, hash);
         } catch(err) {
             console.error(err);
+            //await waitMilliseconds(1000);
+            //i--;
             break;
         }
-        // await waitMilliseconds(100);
     }
 
     for(let i = 0; i < 30; i++) {
