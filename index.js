@@ -94,9 +94,9 @@ async function oneRound(account) {
                 console.log(".......waiting......succ.....", account.address, hash)
                 break;
             }
-            await waitMilliseconds(3000);
         } catch(err) {
             console.error(err);
         }
+        await waitMilliseconds(50000);
     }
 }
